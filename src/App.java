@@ -1,7 +1,6 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -73,7 +72,7 @@ public class App {
         }
         avgMoves = avgMoves / numMovesArr.size();
         writeToFile(filename, "Average number of moves: " + avgMoves);
-        
+
         System.out.println("Number of successes: " + numSuccesses);
 
         long endTime = System.nanoTime();
