@@ -1,3 +1,4 @@
+package main;
 public class Target {
     private int x;
     private int y;

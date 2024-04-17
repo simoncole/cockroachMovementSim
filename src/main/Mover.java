@@ -1,3 +1,4 @@
+package main;
 public class Mover {
     private int curX;
     private int curY;

@@ -1,3 +1,4 @@
+package main;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,9 +12,6 @@ public class App {
         //get number of simulations to run
         //cockroach starts from the middle of the floor
 
-        //build starting scenario from user input
-        //simulate cockroach moving
-        //output results
         //The software shall output the number and direction of moves made by the cockroach in each
         //simulation run, and the average of these simulated moves into the specified output file.
         // The software shall also output the room size, location of the aspirin and glass of water, and
@@ -23,26 +21,104 @@ public class App {
         // simulations.
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Hello, enter the width of the floor: ");
-        int floorWidth = verifyDimension(scanner);
+        int floorWidth;
+        while(true){
+            System.out.print("Hello, enter the width of the floor: ");
+            while(!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer.");
+                scanner.next();
+            }
+            floorWidth = scanner.nextInt();
+            if(verifyDimension(floorWidth)) break;
+            else {
+                System.out.println("Please enter a valid dimension. Try again");
+            }
+        }
+        
+        int floorHeight;
+        while(true){
+            System.out.print("Now enter the height: ");
+            while(!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer.");
+                scanner.next();
+            }
+            floorHeight = scanner.nextInt();
+            if(verifyDimension(floorHeight)) break;
+            else {
+                System.out.println("Please enter a valid dimension. Try again");
+            }
+        }
 
-        System.out.print("Now enter the height: ");
-        int floorHeight = verifyDimension(scanner);
+        int aspirinX;
+        while(true) {
+            System.out.print("What should be the x coordinate of the aspirin? This should be in the range of 0 to " + (floorWidth - 1) + ": ");
+            while(!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer.");
+                scanner.next();
+            }
+            aspirinX = scanner.nextInt();
+            if(verifyTargetCoord(aspirinX, floorWidth - 1)) break;
+            else {
+                System.out.println("Please enter a valid coordinate. Try again");
+            }
 
-        System.out.print("What should be the x coordinate of the aspirin? This should be in the range of 0 to " + (floorWidth - 1) + ": ");
-        int aspirinX = verifyTargetCoord(scanner, floorWidth - 1);
+        }
 
-        System.out.print("And the y? This should be in the range of 0 to " + (floorHeight - 1) + ": ");
-        int aspirinY = verifyTargetCoord(scanner, floorHeight - 1);
+        int aspirinY;
+        while(true) {
+            System.out.print("And the y? This should be in the range of 0 to " + (floorHeight - 1) + ": ");
+            while(!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer.");
+                scanner.next();
+            }
+            aspirinY = scanner.nextInt();
+            if(verifyTargetCoord(aspirinY, floorHeight - 1)) break;
+            else {
+                System.out.println("Please enter a valid coordinate. Try again");
+            }
+        }
 
-        System.out.print("What should be the x coordinate of the glass of water? This should be in the range of 0 to " + (floorWidth - 1) + ": ");
-        int waterX = verifyTargetCoord(scanner, floorWidth - 1);
+        int waterX;
+        while(true) {
+            System.out.print("What should be the x coordinate of the water? This should be in the range of 0 to " + (floorWidth - 1) + ": ");
+            while(!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer.");
+                scanner.next();
+            }
+            waterX = scanner.nextInt();
+            if(verifyTargetCoord(waterX, floorWidth - 1)) break;
+            else {
+                System.out.println("Please enter a valid coordinate. Try again");
+            }
+        }
 
-        System.out.print("And the y? This should be in the range of 0 to " + (floorHeight - 1) + ": ");
-        int waterY = verifyTargetCoord(scanner, floorHeight - 1);
+        int waterY;
+        while(true) {
+            System.out.print("And the y? This should be in the range of 0 to " + (floorHeight - 1) + ": ");
+            while(!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer.");
+                scanner.next();
+            }
+            waterY = scanner.nextInt();
+            if(verifyTargetCoord(waterY, floorHeight - 1)) break;
+            else {
+                System.out.println("Please enter a valid coordinate. Try again");
+            }
+        }
 
-        System.out.print("How many simulations should be run? ");
-        int numSimulations = verifyNum(scanner);
+        int numSimulations;
+        while(true) {
+            System.out.print("How many simulations should be run? ");
+            while(!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer.");
+                scanner.next();
+            }
+            numSimulations = scanner.nextInt();
+            if(verifyNum(numSimulations)) break;
+            else {
+                System.out.println("Please enter a number greater than or equal to 1.");
+            }
+        }
 
         System.out.println("Enter a filename for the output file with any path prepeneded to it: ");
         String filename = scanner.next();
@@ -158,55 +234,25 @@ public class App {
         return false;
     }
 
-    static int verifyNum(Scanner scanner) {
-        int num;
-        while (true) {
-            while(!scanner.hasNextInt()) {
-                System.out.println("Please enter an integer.");
-                scanner.next();
-            }
-            num = scanner.nextInt();
-            if(num >= 1) {
-                return num;
-            }
-            else {
-                System.out.println("Please enter a number greater than or equal to 1.");
-            }
+    static boolean verifyNum(int num) {
+        if(num >= 1) return true;
+        else return false;
+    }
+
+    static boolean verifyDimension(int dimension) {
+        if(dimension >= 2) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
-    static int verifyDimension(Scanner scanner) {
-        int dimension;
-        while (true) {
-            while(!scanner.hasNextInt()) {
-                System.out.println("Please enter an integer.");
-                scanner.next();
-            }
-            dimension = scanner.nextInt();
-            if(dimension >= 2) {
-                return dimension;
-            }
-            else {
-                System.out.println("Please enter a number greater than or equal to 2.");
-            }
-        }
-    }
-
-    static int verifyTargetCoord(Scanner scanner, int maxCoord) {
-        int coord;
-        while (true) {
-            while(!scanner.hasNextInt()) {
-                System.out.println("Please enter an integer.");
-                scanner.next();
-            }
-            coord = scanner.nextInt();
+    static boolean verifyTargetCoord(int coord, int maxCoord) {
             if(coord >= 0 && coord <= maxCoord) {
-                return coord;
+                return true;
             }
-            else {
-                System.out.println("Please enter a number in the range of 0 to " + maxCoord + ".");
-            }
-        }
+            else return false;
     }
 
     public static void writeToFile(String filename, String content) {
@@ -218,3 +264,4 @@ public class App {
         }
     }
 }
+
